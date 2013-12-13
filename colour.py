@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ RGB/Hex Colour Module
-    Version 0.1 release
+    Version 0.2 release
     @author: Ryan Fung
     Create Date: 2013-12-10
     Last Modified: 2013-12-12
@@ -15,8 +15,10 @@ class Colour(object):
         hexadecimal string."""
         def colourConvert():
             """Post-process parsed red, green and blue values into hex"""
-            self.hex = format(int(self.red), "02X") + \
-                format(int(self.green), "02X") + format(int(self.blue), "02X")
+            self.hex = format(int(round(self.red)), "02X") + \
+                format(int(round(self.green)), "02X") + \
+                format(int(round(self.blue)), "02X")
+            self.rgb = (self.red, self.green, self.blue)
         if len(args) == 3:
             """Validate and parse RGB arguments"""
             if (max(args) > 255) or (min(args) < 0):
@@ -80,11 +82,39 @@ of 255, a greyscale value out of either 1 or 255, or a hexadecimal string")
         raise TypeError("no ordering relation is defined for colours")
 
     def __eq__(self, other):
-        if self.red == other.red and self.green == other.green and \
-                self.blue == other.blue:
+        if self.rgb == other.rgb:
             return True
         else:
             return False
 
     def __ne__(self, other):
         return not(self == other)
+
+    def trans(self, t, other):
+        """Returns a Colour object representing the colour when the calling
+        colour has a transparency of 't' out of 1 against an 'other' coloured
+        background"""
+        if t < 0 or t > 1:
+            raise ValueError("Transparency must be between 0 and 1")
+        r = (self.red * t) + (other.red * (1-t))
+        g = (self.green * t) + (other.green * (1-t))
+        b = (self.blue * t) + (other.blue * (1-t))
+        return Colour(r, g, b)
+
+    def lighten(self, factor):
+        """Returns a Colour object representing the colour when the calling
+        colour is lightened by an factor of 'factor'"""
+        if factor < 0 or factor > 1:
+            raise ValueError("Lighten factor must be between 0 and 1")
+        return Colour("FFF").trans(0.25, self)
+
+    def darken(self, factor):
+        """Returns a Colour object representing the colour when the calling
+        colour is darkened by an factor of 'factor'"""
+        if factor < 0 or factor > 1:
+            raise ValueError("Darken factor must be between 0 and 1")
+        return Colour("000").trans(0.25, self)
+
+    def complement(self):
+        """Returns the complement of the calling colour as a Colour object"""
+        return Colour(255-self.red, 255-self.green, 255-self.blue)
