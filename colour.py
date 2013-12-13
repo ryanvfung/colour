@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
 """ RGB/Hex Colour Module
-    Version 0.2 release
+    Version 0.2.1 release
     @author: Ryan Fung
     Create Date: 2013-12-10
-    Last Modified: 2013-12-12
+    Last Modified: 2013-12-13
 """
 
 
 class Colour(object):
     def __init__(self, *args):
-        """Parse the initialising argument(s) as either as: a greyscale
-        percentage; greyscale value out of 255; three integers corresponding
-        to RGB values out of 255; a 3 digit hexadecimal string; or a 6 digit
-        hexadecimal string."""
+        """Parse the initialising argument(s) as either as: three integers
+        corresponding to RGB values out of 255; an RGB tuple or list;
+        a greyscale percentage; greyscale value out of 255; a 3 digit
+        hexadecimal string; or a 6 digit hexadecimal string."""
         def colourConvert():
             """Post-process parsed red, green and blue values into hex"""
             self.hex = format(int(round(self.red)), "02X") + \
                 format(int(round(self.green)), "02X") + \
                 format(int(round(self.blue)), "02X")
             self.rgb = (self.red, self.green, self.blue)
+        if len(args) == 1 and type(args[0]) in [tuple, list]:
+            args = args[0]
         if len(args) == 3:
             """Validate and parse RGB arguments"""
             if (max(args) > 255) or (min(args) < 0):

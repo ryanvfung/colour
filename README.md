@@ -14,7 +14,7 @@ A simple class-based method of manipulating colours by themselves, in terms of t
 
 Methods of the Colour class
 ---------------------------
-* **\_\_init\_\_** -- initialises Colour object by parsing input RGB, greyscale or hex string values
+* **\_\_init\_\_** -- initialises Colour object by parsing input RGB (as 3 int's, tuple or list), greyscale (out of 1 or 255) or hex string values (3 digit or 6 digit, with or without the hash)
 * **\_\_str\_\_** -- readable string interpretation
 * **\_\_repr\_\_** -- representation interpretation
 * **\_\_gt\_\_** -- greater than (>)
@@ -52,3 +52,6 @@ Change log
 * Changed truncation to rounding when converting from RGB to hex after initialising Colour object
 * Defined **trans**, **lighten**, **darken**, **complement** methods
 * Defined **rgb** value
+
+#### 2013-12-13 Version 0.2.1
+* Added support for tuple or list input arguments
