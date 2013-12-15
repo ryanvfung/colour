@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ RGB/Hex Colour Module
-    Version 0.2.1 release
+    Version 0.3 release
     @author: Ryan Fung
     Create Date: 2013-12-10
     Last Modified: 2013-12-13
@@ -120,3 +120,38 @@ of 255, a greyscale value out of either 1 or 255, or a hexadecimal string")
     def complement(self):
         """Returns the complement of the calling colour as a Colour object"""
         return Colour(255-self.red, 255-self.green, 255-self.blue)
+
+
+def average(*args):
+    """Returns the unweighted average of colours"""
+    red = green = blue = 0
+    try:
+        weight = 1./len(args)
+        for item in args:
+            red += weight * item.red
+            green += weight * item.green
+            blue += weight * item.blue
+    except AttributeError:
+        raise TypeError("All arguments must be colours")
+    return Colour(red, green, blue)
+
+
+def weightedAverage(colours, weights):
+    """Returns the weighted average of colours"""
+    if len(colours) != len(weights):
+        raise TypeError("Colours list and weights list must have the \
+same length")
+    if sum(weights) == 0:
+        raise TypeError("Weight List must sum to a non-zero value")
+    weight = float(sum(weights))/len(weights)
+    red = green = blue = 0
+    try:
+        for i in range(len(colours)):
+            red += weight * colours[i].red * weights[i]
+            green += weight * colours[i].green * weights[i]
+            blue += weight * colours[i].blue * weights[i]
+    except AttributeError:
+        raise TypeError("Colours list must only contain colours, Weights \
+list must only contain numbers")
+    return Colour(red, green, blue)
+    

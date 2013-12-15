@@ -10,7 +10,13 @@ A simple class-based method of manipulating colours by themselves, in terms of t
 
 **Created**: 2013-12-10
 
-**Last Modified**: 2013-12-13
+**Last Modified**: 2013-12-15
+
+
+Functions in the Colour module
+------------------------------
+* **average(*args)** -- Returns the unweighted average of colours
+* **weightedAverage(colours, weights)** -- Returns the weighted average of colours
 
 Methods of the Colour class
 ---------------------------
@@ -55,3 +61,6 @@ Change log
 
 #### 2013-12-13 Version 0.2.1
 * Added support for tuple or list input arguments
+
+### 2013-12-15 Version 0.3
+* Defined **average**, **weightedAverage** functions
